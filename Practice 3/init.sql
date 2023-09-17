@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS appDB;
+CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'password';
+GRANT SELECT,UPDATE,INSERT,DELETE ON appDB.* TO 'user'@'%';
+FLUSH PRIVILEGES;
+
+USE appDB;
+CREATE TABLE `group`(
+  ID INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) not null,
+  PRIMARY KEY (ID)
+  
+);
+CREATE TABLE student(
+  ID INT(11) NOT NULL AUTO_INCREMENT,
+  fullname VARCHAR(50) NOT NULL,
+  group_id INT(11),
+  PRIMARY KEY (ID),
+  foreign key (group_id) references `group` (ID) ON DELETE SET NULL
+);
+
