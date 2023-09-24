@@ -1,0 +1,22 @@
+version: '3'
+services:
+   server:
+      build: ./server
+      ports:
+         - '80:80'
+      depends_on:
+         - db
+   nginx:
+      build: ./proxy
+      ports:
+         - '90:90'
+      depends_on:
+         - server
+   db:
+      image: mysql
+      environment:
+         MYSQL_USERNAME: user
+         MYSQL_ROOT_PASSWORD: password
+         MYSQL_DATABASE: appDB
+      volumes:
+         - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
