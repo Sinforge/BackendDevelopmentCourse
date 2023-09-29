@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  server:
+    build: .
+    ports:
+      - "8090:8090"
+    networks:
+      - practice-network
+    restart: on-failure
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_ROOT_PASSWORD: root
+      POSTGRES_DB: practice5
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: aboba12345
+    networks:
+      - practice-network
+
+networks:
+  practice-network:
