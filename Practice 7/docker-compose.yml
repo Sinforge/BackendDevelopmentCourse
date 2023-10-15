@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  server:
+    build: ./practice5
+    ports:
+      - "8090:8090"
+    networks:
+      - server-network
+      - service-network
+    restart: on-failure
+    depends_on:
+      - db
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_ROOT_PASSWORD: root
+      POSTGRES_DB: practice5
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: aboba12345
+    networks:
+      - server-network
+  auth:
+    build: ./Auth
+    ports:
+      - "8081:8081"
+    networks:
+      - service-network
+      - auth-network
+    depends_on:
+      - auth_db
+  auth_db:
+    image: mysql
+    container_name: auth_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth
+      MYSQL_USER: user
+      MYSQL_PASSWORD: aboba12345
+    ports:
+        - "3306:3306"
+    networks:
+        - auth-network
+
+networks:
+  auth-network:
+  server-network:
+  service-network:
