@@ -1,15 +1,14 @@
 version: '3'
 
 services:
-  go-cookie-service:
+  cookie:
+    container_name: cookie
     build:
-      context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      PORT: "8080"
-      COOKIE_NAME: "custom_cookie"
+    networks:
+      - my_network
 
   nginx:
     image: nginx
@@ -17,4 +16,10 @@ services:
       - "80:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
+    networks:
+      - my_network
 
+
+networks:
+  my_network:
+    driver: bridge

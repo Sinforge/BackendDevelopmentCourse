@@ -1,18 +1,18 @@
-# Слой с основным образом
-FROM golang:latest as builder
+FROM golang:1.19.3-alpine AS builder
 
-WORKDIR /go-cookie-service
-COPY . .
+WORKDIR /appdir
 
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app ./cmd/server/main.go
+COPY . ./
 
-# Слой с образом для запуска
-FROM alpine:latest
+RUN go build -o main cmd/main.go
 
-RUN apk --no-cache add ca-certificates
+FROM alpine
 
-WORKDIR /root/
-COPY --from=builder /go-cookie-service .
+WORKDIR /appdir
 
-CMD ["./app"]
+COPY --from=builder /appdir .
+
+CMD ["/appdir/main"]
