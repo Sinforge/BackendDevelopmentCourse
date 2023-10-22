@@ -1,4 +1,4 @@
-package deliveryy
+package delivery
 
 import (
 	"encoding/json"

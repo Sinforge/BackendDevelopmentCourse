@@ -1,4 +1,4 @@
-package deliveryy
+package delivery
 
 import "github.com/gofiber/fiber/v2"
 

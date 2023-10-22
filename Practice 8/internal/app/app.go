@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"pr8/config"
-	"pr8/internal/deliveryy"
+	"pr8/internal/delivery"
 	"pr8/internal/server"
 	"pr8/internal/usecase"
 )
@@ -22,7 +22,7 @@ func (a *App) Start(ctx context.Context) error {
 	// repo
 	uc := usecase.New()
 
-	handlers := deliveryy.New(a.cfg, uc)
+	handlers := delivery.New(a.cfg, uc)
 
 	server := server.New(a.cfg, handlers)
 
