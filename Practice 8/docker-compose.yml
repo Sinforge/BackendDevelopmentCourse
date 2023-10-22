@@ -10,3 +10,11 @@ services:
     environment:
       PORT: "8080"
       COOKIE_NAME: "custom_cookie"
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+

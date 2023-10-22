@@ -1,1 +1,9 @@
-{"message":"failed to start server, cause:[err]","err":"failed to listen: listen tcp4 127.0.0.1:8080: bind: address already in use"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Get cookie request received"}
+{"message":"Calculate factorial concurrent request received"}
+{"message":"Calculate factorial concurrent request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Calculate factorial concurrent request received"}
+{"message":"Calculate factorial concurrent request received"}

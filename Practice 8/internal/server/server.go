@@ -27,8 +27,10 @@ func New(cfg config.Config, handlers deliveryy.Handler) *Server {
 func (s *Server) Run(_ context.Context) (err error) {
 
 	apiGroup := s.app.Group("/api/v1")
-	deliveryy.MapUserRoutes(apiGroup, s.handlers)
+	s.cfg.Logger.Info("Map routes")
+	deliveryy.MapRoutes(apiGroup, s.handlers)
 
+	s.cfg.Logger.Info("Starting server")
 	err = s.app.Listen(fmt.Sprint(s.cfg.Host, s.cfg.Port))
 	if err != nil {
 		s.cfg.Logger.Fatal("failed to start server, cause:[err]", zap.String("err", err.Error()))

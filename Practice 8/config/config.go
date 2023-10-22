@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	Logger *zap.Logger
-	Port   string `mapstructure:"SERVER_PORT"`
-	Host   string `mapstructure:"SERVER_HOST"`
+	Logger     *zap.Logger
+	Port       string `mapstructure:"SERVER_PORT"`
+	Host       string `mapstructure:"SERVER_HOST"`
+	CookieName string `mapstructure:"COOKIE_NAME"`
 }
 
 func InitLogger() (*zap.Logger, error) {
