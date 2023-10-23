@@ -15,4 +15,6 @@ WORKDIR /appdir
 
 COPY --from=builder /appdir .
 
+EXPOSE 8080
+
 CMD ["/appdir/main"]

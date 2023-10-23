@@ -19,10 +19,7 @@ func (uc *UserUseCase) CalculateFactorialConcurrent(_ context.Context, n int) (r
 	for i := 1; i <= n; i++ {
 		wg.Add(1)
 		go func(i int) {
-			defer func() {
-				wg.Done()
-
-			}()
+			defer wg.Done()
 
 			time.Sleep(time.Second)
 			result *= uint64(i)
