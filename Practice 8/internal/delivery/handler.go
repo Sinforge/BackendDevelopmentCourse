@@ -7,6 +7,9 @@ import (
 	"pr8/internal/usecase"
 	"pr8/utils/coder"
 	"time"
+	"fmt"
+	"encoding/base64"
+
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -26,16 +29,16 @@ func New(
 	}
 }
 
-func (h handler) CalculateFactorialConcurrent(ctx *fiber.Ctx) (err error) {
+func (h handler) CalculateSumConcurrent(ctx *fiber.Ctx) (err error) {
 	h.cfg.Logger.Info("Calculate factorial concurrent request received")
 
-	in := models.CalculateFibonacci{}
+	in := models.CalculateSum{}
 
 	if err := ctx.BodyParser(&in); err != nil {
 		return fiber.ErrBadRequest
 	}
 
-	number, err := h.uc.CalculateFactorialConcurrent(ctx.Context(), in.Number)
+	number, err := h.uc.CalculateSumConcurrent(ctx.Context(), in.Number)
 	if err != nil {
 		return err
 	}
@@ -45,12 +48,16 @@ func (h handler) CalculateFactorialConcurrent(ctx *fiber.Ctx) (err error) {
 		h.cfg.Logger.Error(err.Error())
 		return fiber.ErrInternalServerError
 	}
-
-	value := coder.Sha512Hash(response)
-
+	h.cfg.Logger.Info(fmt.Sprintf("Расшифрованные данные: %s", response))
+	value, err := coder.EncryptCookie(response)
+	if err != nil {
+		h.cfg.Logger.Error(err.Error())
+		return fiber.ErrInternalServerError
+	}
+	h.cfg.Logger.Info(fmt.Sprintf("Зашифрованные данные: %s", value))
 	ctx.Cookie(&fiber.Cookie{
 		Name:     h.cfg.CookieName,
-		Value:    value,
+		Value:    base64.StdEncoding.EncodeToString(value),
 		Expires:  time.Now().Add(24 * time.Hour),
 		HTTPOnly: true,
 	})
@@ -58,16 +65,16 @@ func (h handler) CalculateFactorialConcurrent(ctx *fiber.Ctx) (err error) {
 	return ctx.Status(fiber.StatusOK).JSON(number)
 }
 
-func (h handler) CalculateFactorialLinear(ctx *fiber.Ctx) (err error) {
+func (h handler) CalculateSumLinear(ctx *fiber.Ctx) (err error) {
 	h.cfg.Logger.Info("Calculate factorial linear request received")
 
-	in := models.CalculateFibonacci{}
+	in := models.CalculateSum{}
 
 	if err := ctx.BodyParser(&in); err != nil {
 		return fiber.ErrBadRequest
 	}
 
-	number, err := h.uc.CalculateFactorialLinear(ctx.Context(), in.Number)
+	number, err := h.uc.CalculateSumLinear(ctx.Context(), in.Number)
 	if err != nil {
 		h.cfg.Logger.Error(err.Error())
 		return fiber.ErrInternalServerError
@@ -79,11 +86,14 @@ func (h handler) CalculateFactorialLinear(ctx *fiber.Ctx) (err error) {
 		return fiber.ErrInternalServerError
 	}
 
-	value := coder.Sha512Hash(response)
-
+	value, err := coder.EncryptCookie(response)
+	if err != nil {
+		h.cfg.Logger.Error(err.Error())
+		return fiber.ErrInternalServerError
+	}
 	ctx.Cookie(&fiber.Cookie{
 		Name:     h.cfg.CookieName,
-		Value:    value,
+		Value:    base64.StdEncoding.EncodeToString(value),
 		Expires:  time.Now().Add(24 * time.Hour),
 		HTTPOnly: true,
 	})
@@ -95,6 +105,19 @@ func (h handler) GetCookie(ctx *fiber.Ctx) (err error) {
 	h.cfg.Logger.Info("Get cookie request received")
 
 	cookie := ctx.Cookies(h.cfg.CookieName)
+
+	cipher, err := base64.StdEncoding.DecodeString(cookie)
+	if err != nil {
+		h.cfg.Logger.Error(err.Error())
+		return ctx.Status(fiber.StatusBadRequest).JSON(err.Error())
+	}
+	decryptedCookie, err := coder.DecryptCookie(cipher) 
+	if err != nil {
+		h.cfg.Logger.Error(err.Error())
+		return ctx.Status(fiber.StatusBadRequest).JSON(err.Error())
+	}
+	h.cfg.Logger.Info(fmt.Sprintf("Расшифрованные данные: %s", decryptedCookie))
+
 
 	// maybe unmarshall cookie :)
 	return ctx.Status(fiber.StatusOK).JSON(cookie)

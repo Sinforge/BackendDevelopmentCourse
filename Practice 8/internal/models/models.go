@@ -1,5 +1,5 @@
 package models
 
-type CalculateFibonacci struct {
+type CalculateSum struct {
 	Number int `json:"number"`
 }
