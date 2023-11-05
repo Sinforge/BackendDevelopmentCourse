@@ -7,8 +7,14 @@ import (
 
 type (
 	File struct {
-		ID   string                `json:"id"`
-		Data *multipart.FileHeader `json:"data"`
+		ID   string `json:"id"`
+		Name string `json:"name"`
+		Data []byte `json:"data"`
+	}
+
+	UpdateFile struct {
+		ID   string `json:"id"`
+		Data *multipart.FileHeader
 	}
 
 	FileBD struct {

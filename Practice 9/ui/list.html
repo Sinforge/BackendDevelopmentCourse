@@ -38,9 +38,11 @@
       fetch("http://localhost:8080/api/v1/files")
               .then(response => response.json())
               .then(data => {
+
                 data.forEach(file => {
+                  console.log(file)
                   var li = document.createElement("li");
-                  li.innerHTML = `<a href="http://localhost:8080/api/v1/files/${file.ID}" target="_blank">${file.Name}</a>`;
+                  li.innerHTML = `<a href="http://localhost:8080/api/v1/files/${file.id}" target="_blank">${file.name}</a>`;
                   fileList.appendChild(li);
                 });
               })

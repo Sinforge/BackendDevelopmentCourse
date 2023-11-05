@@ -24,9 +24,8 @@ func (a *App) Start(ctx context.Context) error {
 	logger := logger.InitLogger()
 
 	mongoConn := mongoconnector.New(a.cfg.Mongo)
-	grid := mongoConn.GridFS("js")
 
-	repo := repository.New(mongoConn, grid)
+	repo := repository.New(mongoConn)
 	uc := usecase.New(repo)
 
 	handlers := delivery.New(a.cfg.Server, uc, logger)

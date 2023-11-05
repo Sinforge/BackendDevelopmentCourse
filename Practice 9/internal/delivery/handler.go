@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"bytes"
 	"io"
 	"pr9/internal/models"
 	"pr9/internal/usecase"
@@ -47,24 +48,22 @@ func (h handler) GetFileByID(c *fiber.Ctx) error {
 
 	file, err := h.uc.GetFileByID(c.Context(), fileID)
 	if err != nil {
+		h.logger.Error(err.Error())
 		return fiber.ErrInternalServerError
 	}
 
 	c.Set("Content-Disposition", "attachment; filename=alohadance")
 	c.Set("Content-Type", "application/octet-stream")
 
-	fileData, err := file.Data.Open()
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
+	reader := bytes.NewReader(file.Data)
 
-	_, err = io.Copy(c.Response().BodyWriter(), fileData)
+	_, err = io.Copy(c.Response().BodyWriter(), reader)
 	if err != nil {
+		h.logger.Error(err.Error())
 		return err
 	}
 
 	return c.SendStatus(fiber.StatusOK)
-
 }
 
 func (h handler) GetFiles(ctx *fiber.Ctx) error {
@@ -106,14 +105,9 @@ func (h handler) UpdateFileByID(ctx *fiber.Ctx) error {
 
 	fileID := ctx.Params("id")
 
-	file, err := ctx.FormFile("file")
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
-
 	return h.uc.UpdateFileByID(ctx.Context(), models.File{
 		ID:   fileID,
-		Data: file,
+		Name: in.Name,
 	})
 }
 

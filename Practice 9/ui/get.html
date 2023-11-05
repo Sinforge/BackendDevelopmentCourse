@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<h1>File Downloader</h1>
+<form id="fileForm">
+    <input type="text" id="fileId" placeholder="Enter File ID">
+    <button type="submit">Download</button>
+</form>
+<div id="fileContent"></div>
+
+<script>
+    document.getElementById('fileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var fileId = document.getElementById('fileId').value;
+        if (fileId) {
+            downloadFile(fileId);
+        }
+    });
+
+    function downloadFile(fileId) {
+        fetch(`http://localhost:8080/api/v1/files/${fileId}`)
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'downloaded_file.pages';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>

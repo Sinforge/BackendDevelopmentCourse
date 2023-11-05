@@ -3,8 +3,8 @@ Server:
   host: "localhost"
 Mongo:
   db: "files"
-  username: "alohadance"
-  host: "127.0.0.1"
+  username: "root"
+  host: "localhost"
   port: "27017"
-  password: "1234"
+  password: "root"
 

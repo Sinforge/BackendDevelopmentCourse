@@ -13,12 +13,11 @@ services:
       - mongodb
 
   mongodb:
-    image: mongo
+    image: mongodb/mongodb-community-server:6.0-ubi8
     container_name: mongodb
     environment:
-      MONGO_INITDB_DATABASE: "files"
-      MONGO_INITDB_ROOT_USERNAME: "alohadance"
-      MONGO_INITDB_ROOT_PASSWORD: "1234"
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
     ports:
       - "27017:27017"
     networks:

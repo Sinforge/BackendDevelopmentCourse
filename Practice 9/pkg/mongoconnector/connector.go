@@ -1,43 +1,43 @@
 package mongoconnector
 
 import (
+	"context"
 	"fmt"
 	"log"
 
-	"gopkg.in/mgo.v2"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Connector struct {
-	*mgo.Session
-	*mgo.Database
+	*mongo.Client
+	*mongo.Database
 	cfg Config
 }
 
 func New(cfg Config) *Connector {
 	uri := fmt.Sprintf(
-		"mongodb://%s:%s",
+		"mongodb://%s:%s@%s:%s",
+		cfg.Username,
+		cfg.Password,
 		cfg.Host,
 		cfg.Port,
 	)
 
-	session, err := mgo.DialWithInfo(&mgo.DialInfo{
-		Addrs:    []string{uri},
-		Database: "files",
-		Username: cfg.Username,
-		Password: cfg.Password,
-	})
+	clientOptions := options.Client().ApplyURI(uri)
+	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 
-	database := session.DB(cfg.DB)
+	database := client.Database(cfg.DB)
 
-	if err = session.Ping(); err != nil {
-		log.Fatal(err.Error())
+	if err := client.Ping(context.Background(), nil); err != nil {
+		log.Fatal(err)
 	}
 
 	return &Connector{
-		Session:  session,
+		Client:   client,
 		Database: database,
 		cfg:      cfg,
 	}
