@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  cookie:
+    container_name: mongo_app
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: "files"
+      MONGO_INITDB_ROOT_USERNAME: "alohadance"
+      MONGO_INITDB_ROOT_PASSWORD: "1234"
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./.deploy/development:/etc/nginx/conf.d
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

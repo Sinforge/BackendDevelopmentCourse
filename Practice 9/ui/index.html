@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Загрузка файла</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Upload file</h1>
+<form class="upload-form" enctype="multipart/form-data" action="http://localhost:8080/api/v1/files" method="post">
+    <input type="file" name="file" id="fileInput">
+    <button type="submit">Upload</button>
+</form>
+
+<script>
+    document.querySelector('.upload-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var fileInput = document.getElementById('fileInput');
+        var file = fileInput.files[0];
+        var formData = new FormData();
+
+        formData.append('file', file);
+
+        fetch('http://localhost:8080/api/v1/files', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>
