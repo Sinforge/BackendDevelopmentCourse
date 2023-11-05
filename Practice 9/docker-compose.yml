@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  cookie:
+  mongo_app:
     container_name: mongo_app
     build:
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
 
   mongodb:
     image: mongodb/mongodb-community-server:6.0-ubi8
-    container_name: mongodb
+    container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: "root"
       MONGO_INITDB_ROOT_PASSWORD: "root"
