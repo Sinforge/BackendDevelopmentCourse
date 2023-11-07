@@ -52,7 +52,7 @@ func (h handler) GetFileByID(c *fiber.Ctx) error {
 		return fiber.ErrInternalServerError
 	}
 
-	c.Set("Content-Disposition", "attachment; filename=alohadance")
+	c.Set("Content-Disposition", "attachment; filename=file_" + fileID)
 	c.Set("Content-Type", "application/octet-stream")
 
 	reader := bytes.NewReader(file.Data)

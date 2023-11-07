@@ -28,6 +28,7 @@ services:
     ports:
       - "80:80"
     volumes:
+      - ./ui:/etc/nginx/html
       - ./.deploy/development:/etc/nginx/conf.d
     networks:
       - my_network

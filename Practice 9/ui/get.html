@@ -7,17 +7,44 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+    
+        h1 {
             text-align: center;
-            margin-top: 50px;
+            margin-bottom: 20px;
         }
-        input {
+    
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        input[type="text"] {
             padding: 10px;
-            font-size: 16px;
-            margin-right: 10px;
+            width: 250px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
         }
+    
         button {
             padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 16px;
+        }
+    
+        button:hover {
+            background-color: #45a049;
+        }
+    
+        #fileContent {
+            text-align: center;
         }
     </style>
 </head>
@@ -45,7 +72,7 @@
                 var url = window.URL.createObjectURL(blob);
                 var a = document.createElement('a');
                 a.href = url;
-                a.download = 'downloaded_file.pages';
+                a.download = `file_ ${fileId}`;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
