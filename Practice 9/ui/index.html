@@ -20,7 +20,7 @@
 </head>
 <body>
 <h1>Upload file</h1>
-<form class="upload-form" enctype="multipart/form-data" action="http://localhost:8080/api/v1/files" method="post">
+<form class="upload-form" enctype="multipart/form-data" action="http://localhost:8081/api/v1/files" method="post">
     <input type="file" name="file" id="fileInput">
     <button type="submit">Upload</button>
 </form>
@@ -35,7 +35,7 @@
 
         formData.append('file', file);
 
-        fetch('http://localhost:8080/api/v1/files', {
+        fetch('http://localhost:8081/api/v1/files', {
             method: 'POST',
             body: formData
         })

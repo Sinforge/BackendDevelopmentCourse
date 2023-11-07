@@ -39,7 +39,7 @@
     });
 
     function downloadFile(fileId) {
-        fetch(`http://localhost:8080/api/v1/files/${fileId}`)
+        fetch(`http://localhost:8081/api/v1/files/${fileId}`)
             .then(response => response.blob())
             .then(blob => {
                 var url = window.URL.createObjectURL(blob);

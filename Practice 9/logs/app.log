@@ -82,3 +82,40 @@
 {"message":"Get files request received"}
 {"message":"Get files request received"}
 {"message":"Get files request received"}
+{"message":"Get files request received"}
+{"message":"Get files request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"failed to start server, cause:[err]","err":"failed to listen: listen tcp4 0.0.0.0:8080: bind: address already in use"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"update file by id request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"update file by id request received"}
+{"message":"Get file by id request received"}
+{"message":"Get files request received"}
+{"message":"Get files request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Get files request received"}
+{"message":"Get file by id request received"}
+{"message":"the provided hex string is not a valid ObjectID"}
+{"message":"Get file by id request received"}
+{"message":"the provided hex string is not a valid ObjectID"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Get files request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Get files request received"}
+{"message":"Get file by id request received"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Map routes"}
+{"message":"Starting server"}
+{"message":"Get files request received"}
+{"message":"Get file by id request received"}
+{"message":"Get file by id request received"}

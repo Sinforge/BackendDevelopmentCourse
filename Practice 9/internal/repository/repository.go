@@ -112,7 +112,7 @@ func (m MongoRepo) UpdateFileByID(ctx context.Context, file models.File) error {
 	}
 
 	filter := bson.M{"_id": fileID}
-	update := bson.M{"$set": bson.M{"name": file.Name}}
+	update := bson.M{"$set": bson.M{"filename": file.Name}}
 
 	_, err = m.db.Collection("fs.files").UpdateOne(ctx, filter, update)
 	if err != nil {
@@ -190,6 +190,24 @@ func (m MongoRepo) GetFileByID(ctx context.Context, fileID string) (file models.
 		return file, err
 	}
 
+	filter := bson.M{"_id": objID}
+	cursor, err := m.db.Collection("fs.files").Find(ctx, filter)
+	if err != nil {
+		return file, err
+	}
+
+	var fileName string
+
+	for cursor.Next(ctx) {
+		var result gridfs.File
+		err := cursor.Decode(&result)
+		if err != nil {
+			return file, err
+		}
+
+		fileName = result.Name
+	}
+
 	// Read all data from the stream
 	data, err := ioutil.ReadAll(stream)
 	if err != nil {
@@ -199,5 +217,6 @@ func (m MongoRepo) GetFileByID(ctx context.Context, fileID string) (file models.
 	return models.File{
 		ID:   fileID,
 		Data: data,
+		Name: fileName,
 	}, nil
 }

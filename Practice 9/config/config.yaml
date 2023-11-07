@@ -1,10 +1,10 @@
 Server:
-  port: "8080"
+  port: "8081"
   host: "0.0.0.0"
 Mongo:
   db: "files"
   username: "root"
-  host: "mongo"
+  host: "localhost"
   port: "27017"
   password: "root"
 

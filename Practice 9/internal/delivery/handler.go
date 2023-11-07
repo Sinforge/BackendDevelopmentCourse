@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"pr9/internal/models"
 	"pr9/internal/usecase"
@@ -52,7 +53,7 @@ func (h handler) GetFileByID(c *fiber.Ctx) error {
 		return fiber.ErrInternalServerError
 	}
 
-	c.Set("Content-Disposition", "attachment; filename=alohadance")
+	c.Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", file.Name))
 	c.Set("Content-Type", "application/octet-stream")
 
 	reader := bytes.NewReader(file.Data)
