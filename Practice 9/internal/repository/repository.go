@@ -112,7 +112,7 @@ func (m MongoRepo) UpdateFileByID(ctx context.Context, file models.File) error {
 	}
 
 	filter := bson.M{"_id": fileID}
-	update := bson.M{"$set": bson.M{"name": file.Name}}
+	update := bson.M{"$set": bson.M{"filename": file.Name}}
 
 	_, err = m.db.Collection("fs.files").UpdateOne(ctx, filter, update)
 	if err != nil {
