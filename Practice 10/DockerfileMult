@@ -1,0 +1,20 @@
+FROM golang:1.19.3-alpine AS builder
+
+WORKDIR /appdir
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+COPY . ./
+
+RUN go build -o main grpc/server_mult/main.go
+
+FROM alpine
+
+WORKDIR /appdir
+
+COPY --from=builder /appdir .
+
+EXPOSE 9002
+
+CMD ["/appdir/main"]

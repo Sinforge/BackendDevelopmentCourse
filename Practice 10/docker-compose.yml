@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  gateway:
+    container_name: gateway
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+    depends_on:
+      - service1
+      - service2
+  service1:
+    container_name: service1
+    build:
+      dockerfile: DockerfileMult
+    networks:
+      - my_network
+    ports:
+      - "9002:9002"
+  service2:
+    container_name: service2
+    build:
+      dockerfile: DockerfileSum
+    networks:
+      - my_network
+    ports:
+      - "9001:9001"
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - my_network
+    depends_on:
+      - gateway
+networks:
+  my_network:
+    driver: bridge

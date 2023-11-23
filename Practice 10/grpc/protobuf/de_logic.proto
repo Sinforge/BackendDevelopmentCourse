@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "./de_mult";
+package de_mult;
+
+message Input {
+  int32 val1 = 1; 
+  int32 val2 = 2;
+}
+
+message Result {
+  int32 val = 1;
+}
+
+service de_logic {
+  rpc Calc(Input) returns (Result) {}
+}
