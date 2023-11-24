@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String targetUrl = "http://analytics_service:8000/greeting/analytics/diagram";
+     public static void main(String[] args) throws IOException, InterruptedException {
+        String targetUrl = "http://analyticsservice:8000/greeting/analytics/diagram/";
         int count = 0;
         for (; ; count++) {
             String requestBody = "{\"prices\":" + getRandomPricesArray() + ",\"productType\":" + "\""
@@ -65,7 +65,6 @@ public class Main {
         BOOK;
 
         private static final Random random = new Random();
-
         public static ProductType randomValue() {
             ProductType[] productTypes = ProductType.values();
             return productTypes[random.nextInt(productTypes.length)];

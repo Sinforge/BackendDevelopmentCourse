@@ -9,10 +9,10 @@ services:
     networks:
       - practice-network
     depends_on:
-      - analytics_service
+      - analyticsservice
     restart: on-failure
 
-  analytics_service:
+  analyticsservice:
     build:
       context: AnalyticsService/helloworld
       dockerfile: Dockerfile

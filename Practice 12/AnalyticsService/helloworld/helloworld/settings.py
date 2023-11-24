@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_-*_h8%95*y(e-$jm4tlon$g!3(!w&%5e=0yp1rl&5hb_+x%9(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["analyticsservice", "localhost"]
 
 
 # Application definition
@@ -76,17 +76,27 @@ WSGI_APPLICATION = 'helloworld.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'practice12',
+#         'USER': 'user',
+#         'PASSWORD': 'aboba12345',
+#         'HOST': 'db',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'practice12',
-        'USER': 'user',
-        'PASSWORD': 'aboba12345',
-        'HOST': 'db',
+        'NAME': 'analytics',
+        'USER': 'postgres',
+        'PASSWORD': 'GGwp1010',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

@@ -20,11 +20,11 @@ def makeDiagram(request):
     # decode body
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    dataMassive = body["massive"]
+    dataMassive = body["prices"]
     if dataMassive is None:
         return JsonResponse("Unknown data")
     
-    productType = dataMassive['productType']
+    productType = body['productType']
 
     try:
         value = Analytics.objects.get(count=len(dataMassive), product_type = productType, sum =  sum(dataMassive))
@@ -40,7 +40,7 @@ def makeDiagram(request):
     # generate new diagram
 
     # get prices
-    prices = list(map(lambda s: s['price'], dataMassive))
+    prices = dataMassive
     # Определяем границы для группировки продуктов по цене
     price_bins = [0, 5000, 15000]
 
