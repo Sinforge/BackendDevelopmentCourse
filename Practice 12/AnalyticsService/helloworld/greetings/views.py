@@ -24,10 +24,10 @@ def makeDiagram(request):
     if dataMassive is None:
         return JsonResponse("Unknown data")
     
-    productType = dataMassive[0]['productType']
+    productType = dataMassive['productType']
 
     try:
-        value = Analytics.objects.get(count=len(dataMassive), product_type = productType)
+        value = Analytics.objects.get(count=len(dataMassive), product_type = productType, sum =  sum(dataMassive))
     except Analytics.DoesNotExist:
         value = None
     if value is not None:
@@ -65,7 +65,7 @@ def makeDiagram(request):
 
 
 
-    new_entity = Analytics(count = len(prices), product_type = productType, image=buffer.getvalue())
+    new_entity = Analytics(count = len(prices), product_type = productType, image=buffer.getvalue(), sum = sum(dataMassive))
     new_entity.save()
     # save in postgres
 

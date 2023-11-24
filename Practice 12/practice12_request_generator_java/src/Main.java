@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
-        String targetUrl = "http://container_name:8000/endpoint";
+        String targetUrl = "http://analytics_service:8000/greeting/analytics/diagram";
         while (true) {
 
             String requestBody = "{\"prices\":" + getRandomPricesArray().toString() + ",\"productType\":" + "\""
@@ -29,7 +29,7 @@ public class Main {
                 os.write(input, 0, input.length);
             }
 
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         }
     }
 

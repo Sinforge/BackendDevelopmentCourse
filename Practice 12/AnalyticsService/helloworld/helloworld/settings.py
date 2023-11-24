@@ -79,14 +79,13 @@ WSGI_APPLICATION = 'helloworld.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'analytics',
-        'USER': 'postgres',
-        'PASSWORD': 'GGwp1010',
-        'HOST': 'localhost',
+        'NAME': 'practice12',
+        'USER': 'user',
+        'PASSWORD': 'aboba12345',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

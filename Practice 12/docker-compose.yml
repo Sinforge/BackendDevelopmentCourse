@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  generator:
+    build: 
+      context: practice12_request_generator_java
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    networks:
+      - practice-network
+    depends_on:
+      - analytics_service
+    restart: on-failure
+
+  analytics_service:
+    build:
+      context: AnalyticsService/helloworld
+      dockerfile: Dockerfile
+    networks:
+      - practice-network
+    depends_on:
+      - db
+    restart: on-failure
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    
+  db:
+    image: postgres
+    environment:
+      POSTGRES_ROOT_PASSWORD: root
+      POSTGRES_DB: practice12
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: aboba12345
+    networks:
+      - practice-network
+
+networks:
+  practice-network:
