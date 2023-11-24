@@ -35,24 +35,17 @@ public class Main {
             int responseCode = connection.getResponseCode();
             System.out.println("AFTER REQUEST, BEFORE RESPONSE READING");
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String inputLine;
+                try (InputStream is = connection.getInputStream()) {
+                    BufferedImage img = ImageIO.read(is);
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    // Save the image to a file
+                    File outputfile = new File("image" + count + ".png");
+                    ImageIO.write(img, "png", outputfile);
+
+                    System.out.println("Image saved successfully.");
                 }
-                in.close();
-                String imageData = response.toString();
-                System.out.println("AFTER IMAGE READING");
-                byte[] imageBytes = imageData.getBytes(); // Assuming the response is already in binary format (byte array)
-                System.out.println(Arrays.toString(imageBytes));
-                BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageBytes));
-                File outputfile = new File("/images/image" + count + ".png");
-                ImageIO.write(img, "png", outputfile);
-            }
-            else {
-                System.out.println("HTTP GET request failed with response code: " + responseCode);
+            } else {
+                System.out.println("HTTP POST request failed with response code: " + responseCode);
             }
             connection.disconnect();
             Thread.sleep(30000);
